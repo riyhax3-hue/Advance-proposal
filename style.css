@@ -1,0 +1,162 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: sans-serif;
+    flex-direction: column;
+}
+
+.heart-card-container {
+    position: relative; /* Needed for absolute positioning of overlay */
+    text-align: center;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* --- Developer Overlay Styling --- */
+.developer-info-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: opacity 0.5s ease;
+    z-index: 20; /* On top of everything */
+}
+
+.developer-info-overlay.hidden {
+    opacity: 0;
+    pointer-events: none; /* Allows clicking through when hidden */
+}
+
+.developer-info-overlay h3 {
+    color: #e53935;
+    margin-bottom: 10px;
+}
+
+.developer-info-overlay p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.developer-info-overlay a {
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.instruction-click {
+    margin-top: 15px !important;
+    font-weight: bold;
+    color: #e53935 !important;
+}
+
+/* --- Heart Card and Instructions Styling (Mostly Unchanged) --- */
+
+.instruction {
+    /* Initially hide hover instruction */
+    display: none; 
+    margin-top: 20px;
+    color: #555;
+    font-size: 1.1em;
+}
+
+.instruction.visible {
+    display: block;
+}
+
+.heart-card {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0.5; /* Dimmed state initially */
+    transition: opacity 0.5s ease;
+}
+
+.heart-card.active {
+    opacity: 1; /* Full opacity after click */
+}
+
+/* --- Heart Shape Definition (Unchanged) --- */
+.heart {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #e53935;
+    transform: rotate(-45deg);
+    animation: pulse 1.5s infinite;
+    transition: all 0.5s ease;
+    z-index: 10;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #e53935;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -50px;
+    left: 0;
+}
+
+.heart::after {
+    left: 50px;
+    top: 0;
+}
+
+/* --- Pulsing Animation (Unchanged) --- */
+@keyframes pulse {
+    0% { transform: rotate(-45deg) scale(1); }
+    50% { transform: rotate(-45deg) scale(1.1); }
+    100% { transform: rotate(-45deg) scale(1); }
+}
+
+/* --- Message Styling (Unchanged) --- */
+.message {
+    position: absolute;
+    color: #e53935;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 5;
+}
+
+/* --- Hover Effect (The Animation - Unchanged) --- */
+.heart-card:hover .heart {
+    opacity: 0;
+    transform: rotate(-45deg) scale(1.5);
+}
+
+.heart-card:hover .message {
+    opacity: 1;
+    transform: scale(1);
+    animation: none;
+}
